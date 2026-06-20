@@ -1,2 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "feodis-tracker"
+version = "0.1.0"
+description = "Minimal tracker service that accepts location events and stores them."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "Flask>=2.0",
+    "SQLAlchemy>=1.4",
+    "Flask_SQLAlchemy>=2.5",
+    "psycopg2-binary>=2.9",
+]
+
+[tool.setuptools]
+packages = ["feodis_tracker"]
+
 [tool.vercel]
-entrypoint = "feodis_tracker.routes:app"
+entrypoint = "run:app"
