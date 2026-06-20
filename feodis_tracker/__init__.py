@@ -24,6 +24,7 @@ def create_app(test_config=None):
     with app.app_context():
         # Import parts of our application
         from . import routes
+        app.register_blueprint(routes.bp)
         # create tables on startup if they don't exist
         db.create_all()
 

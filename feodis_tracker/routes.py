@@ -1,14 +1,16 @@
-from flask import current_app as app, request, jsonify, send_from_directory
+from flask import Blueprint, request, jsonify, send_from_directory
 from . import db
 from .models import Event
 
+bp = Blueprint("feodis_tracker", __name__, static_folder="static", static_url_path="/static")
 
-@app.route("/", methods=["GET"])
+
+@bp.route("/", methods=["GET"])
 def index():
     return jsonify({"status": "ok", "service": "feodis-tracker"})
 
 
-@app.route("/track", methods=["POST"])
+@bp.route("/track", methods=["POST"])
 def track():
     data = request.get_json() or {}
     lat = data.get("lat")
@@ -25,13 +27,13 @@ def track():
     return jsonify(ev.to_dict()), 201
 
 
-@app.route("/events", methods=["GET"])
+@bp.route("/events", methods=["GET"])
 def events():
     items = Event.query.order_by(Event.timestamp.desc()).limit(100).all()
     return jsonify([e.to_dict() for e in items])
 
 
-@app.route('/ui', methods=['GET'])
+@bp.route('/ui', methods=['GET'])
 def ui():
     # serve the single-file frontend (Leaflet) from the package static folder
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory(bp.static_folder, 'index.html')
