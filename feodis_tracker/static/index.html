@@ -9,10 +9,54 @@
       html,body,#map { height: 100%; margin: 0; padding: 0; }
       #map { width: 100%; height: 100vh; }
       .leaflet-control-attribution { display:none; }
+
+      /* Control panel */
+      #controls {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        padding: 10px;
+        z-index: 1000;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        font-size: 14px;
+        color: #111;
+        min-width: 180px;
+      }
+
+      #controls label { display:block; margin-bottom:6px; font-weight:600; }
+      #controls .row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+      #controls select, #controls button { padding:6px 8px; border-radius:6px; border:1px solid #ddd; background:#fff; }
+      #controls button { cursor:pointer; }
+      #controls .small { font-size:12px; color:#666; }
     </style>
   </head>
   <body>
     <div id="map"></div>
+
+    <div id="controls">
+      <div class="row">
+        <label for="live">Live</label>
+        <input id="live" type="checkbox" checked />
+      </div>
+      <div class="row">
+        <label for="range">Show</label>
+        <select id="range">
+          <option value="0">All</option>
+          <option value="5">Last 5 minutes</option>
+          <option value="15">Last 15 minutes</option>
+          <option value="60">Last 1 hour</option>
+          <option value="1440">Last 24 hours</option>
+        </select>
+      </div>
+      <div class="row">
+        <button id="refresh">Refresh</button>
+        <div class="small" id="status">Updated just now</div>
+      </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1jz7k5QY6k9kJ3G6f4YcQ0Z1b0u5g1q+g9e0zU9M=" crossorigin=""></script>
     <script src="/static/app.js"></script>
   </body>
