@@ -1,0 +1,2 @@
+[tool.vercel]
+entrypoint = "feodis_tracker.routes:app"
