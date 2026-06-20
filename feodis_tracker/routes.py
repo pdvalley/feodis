@@ -1,4 +1,4 @@
-from flask import current_app as app, request, jsonify
+from flask import current_app as app, request, jsonify, send_from_directory
 from . import db
 from .models import Event
 
@@ -29,3 +29,9 @@ def track():
 def events():
     items = Event.query.order_by(Event.timestamp.desc()).limit(100).all()
     return jsonify([e.to_dict() for e in items])
+
+
+@app.route('/ui', methods=['GET'])
+def ui():
+    # serve the single-file frontend (Leaflet) from the package static folder
+    return send_from_directory(app.static_folder, 'index.html')
